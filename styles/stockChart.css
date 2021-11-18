@@ -1,0 +1,7 @@
+div.react-stockchart {
+  border: 0.5px solid #cccccc;
+}
+
+rect {
+  stroke-width: 0;
+}
