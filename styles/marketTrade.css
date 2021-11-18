@@ -1,30 +1,51 @@
 .trades__table {
-  width: 25%;
-  min-height: 200px;
-  max-height: 200px;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 320px;
+  min-height: 363px;
+  max-height: 363px;
   border: 1px solid #cccccc;
 }
-.trades__table thead {
+.trades__table > thead {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 8px 23px 8px 5px;
+  box-sizing: border-box;
   width: 100%;
   height: 30px;
   background-color: rgb(217, 222, 236);
 }
+.trades__table > thead > th {
+  flex: 1;
+  font-weight: bold;
+}
 
-.trades__table th.col,
-.trades__table td.col {
+
+.trades__table th,
+.trades__table td {
   width: 33%;
 }
 
-.trades__table tbody {
+.trades__table > tbody {
   display: flex;
-  flex-direction: column;
+  flex: 1;
+  flex-flow: column nowrap;
+  padding: 0 5px;
+  box-sizing: border-box;
+  max-width: 100%;
   width: 100%;
-  max-height: calc(200px - 30px);
+  height: calc(200px - 30px);
   overflow-y: scroll;
 }
 .trades__table tbody > tr {
-  height: 30px;
-  border-bottom: 1px solid #ccccccaa;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  width: 100%;
+  min-height: 30px;
 }
 
 .trades__table tbody > tr > .price {
@@ -37,12 +58,10 @@
 }
 .trades__table td.left,
 .trades__table th.left {
-  padding-left: 20px;
   text-align: left;
 }
 .trades__table td.right,
 .trades__table th.right {
-  padding-right: 20px;
   text-align: right;
 }
 

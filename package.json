@@ -2,7 +2,7 @@
   "name": "stock-chart-demo",
   "private": true,
   "scripts": {
-    "dev": "PORT=3001 next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "PORT=3001 next start",
     "lint": "next lint"

@@ -65,17 +65,15 @@ const MarketTrade = () => {
 
   return (
     <div className="marketTrade">
-      <div style={{ display: "flex" }}>
-        <h1 className="instrument">{currencyPair}</h1>
+      <div style={{ display: "flex", marginBottom: 10 }}>
+        <span className="instrument">{currencyPair}</span>
         <span>Market Trade</span>
       </div>
       <table className="trades__table">
         <thead>
-          <tr>
             <th className="col left">Price({unit})</th>
             <th className="col right">Amount({currency})</th>
             <th className="col right">Time</th>
-          </tr>
         </thead>
         <tbody>
           <TradeItem list={tradeList} />

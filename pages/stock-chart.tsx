@@ -61,7 +61,7 @@ function StockChartPage() {
   return (
     <Layout>
       <div style={{ display: "flex" }}>
-        <h1>{currencyPair}</h1>
+      <span className="instrument">{currencyPair}</span>
         <span>Stock Chart</span>
       </div>
       {candleData === null ? (

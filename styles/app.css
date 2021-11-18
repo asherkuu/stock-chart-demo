@@ -138,7 +138,6 @@ tr {
 th,
 td {
   font-weight: unset;
-  padding-right: 10px;
 }
 td {
   overflow: hidden;
@@ -152,4 +151,11 @@ button:hover {
 .layout__children {
   padding: 0 30px;
   margin-top: 20px;
+}
+
+/* global style */
+.instrument {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
 }

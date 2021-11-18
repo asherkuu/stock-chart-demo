@@ -49,7 +49,7 @@ const App = () => {
   return (
     <div className="App">
       <div style={{ display: "flex" }}>
-        <h1 className="instrument">{currencyPair}</h1>
+        <span className="instrument">{currencyPair}</span>
         <span>Order Book</span>
       </div>
       <div>
