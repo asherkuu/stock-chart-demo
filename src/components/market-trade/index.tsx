@@ -5,7 +5,6 @@ import TradeItem from "./TradeList";
 
 const MarketTrade = () => {
   const [tradeList, setTradeList] = useState([]);
-  const currencyPair = "XBTUSD";
   const currency = "XBT";
   const unit = "USD";
 
@@ -33,7 +32,7 @@ const MarketTrade = () => {
     return () => {
       ws.close();
     };
-  }, [currencyPair]);
+  }, [currency]);
 
   useEffect(() => {
     handleLimitTradeList();
@@ -66,14 +65,14 @@ const MarketTrade = () => {
   return (
     <div className="marketTrade">
       <div style={{ display: "flex", marginBottom: 10 }}>
-        <span className="instrument">{currencyPair}</span>
+        <span className="instrument">{currency + unit}</span>
         <span>Market Trade</span>
       </div>
       <table className="trades__table">
         <thead>
-            <th className="col left">Price({unit})</th>
-            <th className="col right">Amount({currency})</th>
-            <th className="col right">Time</th>
+          <th className="col left">Price({unit})</th>
+          <th className="col right">Amount({currency})</th>
+          <th className="col right">Time</th>
         </thead>
         <tbody>
           <TradeItem list={tradeList} />

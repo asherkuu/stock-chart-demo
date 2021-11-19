@@ -10,7 +10,7 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 8px 23px 8px 5px;
+  padding: 8px 5px 8px 5px;
   box-sizing: border-box;
   width: 100%;
   height: 30px;
@@ -20,7 +20,6 @@
   flex: 1;
   font-weight: bold;
 }
-
 
 .trades__table th,
 .trades__table td {

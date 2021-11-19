@@ -13,6 +13,8 @@ import {
   CrossHairCursor,
   MouseCoordinateX,
   MouseCoordinateY,
+  PriceCoordinate,
+  EdgeIndicator,
 } from "react-stockcharts/lib/coordinates";
 
 import LineChart from "./LineChart";
@@ -46,49 +48,49 @@ const gridWidth = width - margin.left - margin.right;
 const gridHeight = height - margin.top - margin.bottom;
 
 const showGrid = true;
+
 const xGrid = showGrid
   ? {
       innerTickSize: -1 * gridHeight,
-      tickStrokeDasharray: "ShortDot",
+      tickStrokeDasharray: "Solid",
       tickStrokeOpacity: 0.1,
-      tickStrokeWidth: 1,
+      tickStrokeWidth: 0.5,
     }
   : {};
 const yGrid = showGrid
   ? {
       innerTickSize: -1 * gridWidth,
-      tickStrokeDasharray: "ShortDot",
+      tickStrokeDasharray: "Solid",
       tickStrokeOpacity: 0.1,
-      tickStrokeWidth: 1,
+      tickStrokeWidth: 0.5,
     }
   : {};
 
-const _renderChart = (chartSetting: string) => {
-  return (
-    <>
-      {chartSetting === "candle" && <CandleChart />}
-      {chartSetting === "line" && <LineChart isGradiant={false} />}
-      {chartSetting === "area" && <LineChart isGradiant={true} />}
-    </>
-  );
-};
+const _renderChart = (chartSetting: string) => (
+  <>
+    {chartSetting === "candle" && <CandleChart />}
+    {chartSetting === "line" && <LineChart isGradiant={false} />}
+    {chartSetting === "area" && <LineChart isGradiant={true} />}
+  </>
+);
 
-function StockChart(props: CandleStickChartState) {
+function StockChart({
+  type,
+  data: initialData,
+  width: propWidth,
+  ratio,
+}: CandleStickChartState) {
   const [suffix, setSuffix] = useState<number>(1);
   const [dateSetting, setDateSetting] = useState<number>(0);
   const [chartSetting, setChartSetting] = useState<string>("candle");
 
-  const {
-    type = "hybrid",
-    data: initialData,
-    width: propsWidth,
-    ratio,
-  } = props;
   const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
     (d) => d.date
   );
+
   const { data, xScale, xAccessor, displayXAccessor } =
     xScaleProvider(initialData);
+
   const start = xAccessor(last(data));
   const end = xAccessor(data[Math.max(0, data.length - 100)]);
   const xExtents = [start, end];
@@ -98,7 +100,7 @@ function StockChart(props: CandleStickChartState) {
   };
 
   return (
-    <div style={{ marginTop: 80 }}>
+    <div className="stockChart">
       <ToolBar
         state={{
           onReset: handleReset,
@@ -124,10 +126,22 @@ function StockChart(props: CandleStickChartState) {
       >
         {/* 상단 차트 */}
         <Chart id={1} height={240} yExtents={(d) => [d.high, d.low]}>
-          {/* 우측 Y 값 */}
-          <YAxis axisAt="right" orient="right" ticks={10} {...yGrid} />
           {/* 하단 X 값 */}
-          <XAxis axisAt="bottom" orient="bottom" showTicks={false} {...xGrid} />
+          <XAxis
+            axisAt="bottom"
+            orient="bottom"
+            showTicks={false}
+            stroke="#ccccccaa"
+          />
+
+          {/* 우측 Y 값 */}
+          <YAxis
+            axisAt="right"
+            orient="right"
+            ticks={10}
+            stroke="#ccccccaa"
+            {...yGrid}
+          />
 
           {/* 마우스 Hover시 Y값 출력 */}
           <MouseCoordinateY
@@ -136,9 +150,36 @@ function StockChart(props: CandleStickChartState) {
             displayFormat={format(".2f")}
           />
 
+          {/* 화면에 보여지는 마지막 캔들 종가 */}
+          <EdgeIndicator
+            itemType="last"
+            orient="right"
+            edgeAt="right"
+            yAccessor={(d) => d.close}
+            fill={(d) => (d.close > d.open ? "#FF0000" : "#002fff")}
+            strokeWidth={1}
+            arrowWidth={7}
+            hideLine={true}
+          />
+
+          {/* 현재가 in chart */}
+          <PriceCoordinate
+            at="right"
+            orient="right"
+            price={data[data.length - 1].close}
+            stroke="#3490DC"
+            strokeWidth={1}
+            fill="#FFFFFF"
+            textFill="#22292F"
+            arrowWidth={7}
+            strokeDasharray="ShortDot"
+            displayFormat={format(".2f")}
+          />
+
           {/* 차트 */}
           {_renderChart(chartSetting)}
 
+          {/* 중간 버튼 */}
           <ZoomButtons onReset={handleReset} />
 
           {/* Hover Tooltip */}
@@ -158,7 +199,7 @@ function StockChart(props: CandleStickChartState) {
         {/* 하단 거래량 차트 */}
         <Chart
           id={2}
-          origin={(w, h) => [0, h - 150]}
+          origin={(w, h) => [0, h - 160]}
           height={115}
           yExtents={(d) => d.volume}
         >
@@ -168,9 +209,18 @@ function StockChart(props: CandleStickChartState) {
             orient="right"
             ticks={5}
             tickFormat={format(".1s")}
+            stroke="#ccccccaa"
+            {...yGrid}
           />
+
           {/* 하단 X 값 */}
-          <XAxis axisAt="bottom" orient="bottom" ticks={20} />
+          <XAxis
+            axisAt="bottom"
+            orient="bottom"
+            ticks={20}
+            stroke="#ccccccaa"
+            {...xGrid}
+          />
 
           {/* 마우스 Hover시 X값 출력 */}
           <MouseCoordinateX
@@ -185,12 +235,13 @@ function StockChart(props: CandleStickChartState) {
             orient="right"
             displayFormat={format(".4s")}
           />
+
           {/* 하단 거래량 데이터 */}
           <BarSeries
             yAccessor={(d) => d.volume}
             stroke={false}
             opacity={0.8}
-            fill={(d) => (d.close > d.open ? "#2548e2" : "rgb(255, 0, 0)")}
+            fill={(d) => (d.close > d.open ? "#FF0000" : "#002fff")}
           />
         </Chart>
         <CrossHairCursor />

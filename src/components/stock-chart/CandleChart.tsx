@@ -2,11 +2,11 @@ import React from "react";
 import { CandlestickSeries } from "react-stockcharts/lib/series";
 
 const candlesAppearance = {
-  wickStroke: (d) => (d.close > d.open ? "#002fff" : "#FF0000"),
+  wickStroke: (d) => (d.close > d.open ? "#FF0000" : "#002fff"),
   fill: function fill(d) {
-    return d.close > d.open ? "#002fff" : "#FF0000";
+    return d.close > d.open ? "#FF0000" : "#002fff";
   },
-  stroke: (d) => (d.close > d.open ? "#002fff" : "#FF0000"),
+  stroke: (d) => (d.close > d.open ? "#FF0000" : "#002fff"),
   candleStrokeWidth: 1,
   widthRatio: 0.8,
   opacity: 1,

@@ -8,10 +8,12 @@ interface AskOrderProps {
   price: number;
   maxCumulative: number;
   cumulative: number;
+  handlePriceClick: (e: number) => void;
 }
 
 const AskOrder: React.FC<AskOrderProps> = (props) => {
-  const { cumulative, price, quantity, maxCumulative } = props;
+  const { cumulative, price, quantity, maxCumulative, handlePriceClick } =
+    props;
 
   return (
     <tr className="orderbook__ask">
@@ -23,7 +25,12 @@ const AskOrder: React.FC<AskOrderProps> = (props) => {
       >
         {cumulative}
       </td>
-      <td className="orderbook__price__ask">{price}</td>
+      <td
+        className="orderbook__price__ask"
+        onClick={() => handlePriceClick(Number(price))}
+      >
+        {price}
+      </td>
       <td className="orderbook__quantity__ask">{quantity}</td>
     </tr>
   );

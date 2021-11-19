@@ -49,7 +49,8 @@ interface CandleDataState {
 function StockChartPage() {
   const [candleData, setCandleData] = useState<CandleDataState[]>(null);
 
-  const currencyPair = "XBTUSD";
+  const currency = "XBT";
+  const unit = "USD";
 
   useEffect(() => {
     getData().then((data: CandleDataState[]) => {
@@ -61,7 +62,7 @@ function StockChartPage() {
   return (
     <Layout>
       <div style={{ display: "flex" }}>
-      <span className="instrument">{currencyPair}</span>
+        <span className="instrument">{currency + unit}</span>
         <span>Stock Chart</span>
       </div>
       {candleData === null ? (

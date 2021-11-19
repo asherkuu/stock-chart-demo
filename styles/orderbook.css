@@ -1,3 +1,7 @@
+.orderbook {
+  display: flex;
+}
+
 .orderbook__table {
   border-collapse: collapse;
   table-layout: fixed;
@@ -67,4 +71,13 @@
   background-color: #f5e4ea;
   border-left: 1px solid #cccccc;
   border-right: 1px solid #cccccc;
+}
+
+.orderbook__price__ask:hover {
+  cursor: pointer;
+  background-color: #c6d9f8;
+}
+.orderbook__price__bid:hover {
+  cursor: pointer;
+  background-color: #f8cfde;
 }

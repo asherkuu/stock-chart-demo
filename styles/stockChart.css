@@ -1,3 +1,9 @@
+.stockChart {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  /* background-color: #cccccc; */
+}
 div.react-stockchart {
   border: 0.5px solid #cccccc;
 }

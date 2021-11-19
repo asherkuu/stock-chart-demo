@@ -5,11 +5,12 @@ const App = () => {
   const [askOrders, setAskOrders] = useState<[]>([]);
   const [bidOrders, setBidOrders] = useState<[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const currencyPair = "XBTUSD";
+  const currency = "XBT";
+  const unit = "USD";
 
   useEffect(() => {
     const ws = new WebSocket(
-      "wss://www.bitmex.com/realtime?subscribe=orderBook10:XBTUSD"
+      `wss://www.bitmex.com/realtime?subscribe=orderBook10:${currency + unit}`
     );
 
     ws.onopen = () => {
@@ -44,12 +45,12 @@ const App = () => {
     return () => {
       ws.close();
     };
-  }, [currencyPair]);
+  }, [currency + unit]);
 
   return (
     <div className="App">
       <div style={{ display: "flex" }}>
-        <span className="instrument">{currencyPair}</span>
+        <span className="instrument">{currency + unit}</span>
         <span>Order Book</span>
       </div>
       <div>

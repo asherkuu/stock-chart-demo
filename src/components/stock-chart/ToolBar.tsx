@@ -6,7 +6,8 @@ const options = [
   { value: "vanilla", label: "Vanilla" },
 ];
 
-import CandleChart from "assets/svg/candlestick-chart.svg";
+import ChartIcon from "assets/svg/candlestick-chart.svg";
+import ResetIcon from "assets/svg/reset.svg";
 
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -25,13 +26,29 @@ interface HeaderProps {
 const ToolBar = ({ state }: HeaderProps) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const open1 = Boolean(anchorEl1);
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const open2 = Boolean(anchorEl2);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleClick1 = (event) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleClose1 = () => {
+    setAnchorEl1(null);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   const {
@@ -44,7 +61,7 @@ const ToolBar = ({ state }: HeaderProps) => {
 
   const handleChartSettingChange = (chart: string) => {
     setChartSetting(chart);
-    handleClose();
+    handleClose1();
   };
 
   const handleDateSettingChange = (e) => {
@@ -65,6 +82,33 @@ const ToolBar = ({ state }: HeaderProps) => {
 
   return (
     <div className="toolbar">
+      <div className="box text title">
+        <Button
+          className="tool__box title"
+          id="basic-button"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={open2 ? "true" : undefined}
+          onClick={handleClick2}
+        >
+          <span className="">너는 , 달아</span>
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl2}
+          open={open2}
+          onClose={handleClose2}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={() => alert("준비중입니다")}>시에라</MenuItem>
+          <MenuItem onClick={() => alert("준비중입니다")}>숨겨진 성녀</MenuItem>
+          <MenuItem onClick={() => alert("준비중입니다")}>
+            미스테리오소
+          </MenuItem>
+        </Menu>
+      </div>
       <div className="box">
         <Button
           className="tool__box"
@@ -74,13 +118,38 @@ const ToolBar = ({ state }: HeaderProps) => {
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
         >
-          <CandleChart className="toolbar__icon" />
+          <span className="toolbar__icon text">1D</span>
         </Button>
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={() => alert("준비중입니다")}>1일</MenuItem>
+          <MenuItem onClick={() => alert("준비중입니다")}>1주</MenuItem>
+          <MenuItem onClick={() => alert("준비중입니다")}>한 달</MenuItem>
+        </Menu>
+      </div>
+      <div className="box">
+        <Button
+          className="tool__box"
+          id="basic-button"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={open1 ? "true" : undefined}
+          onClick={handleClick1}
+        >
+          <ChartIcon className="toolbar__icon" />
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl1}
+          open={open1}
+          onClose={handleClose1}
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}
@@ -95,6 +164,18 @@ const ToolBar = ({ state }: HeaderProps) => {
             영역
           </MenuItem>
         </Menu>
+      </div>
+      <div className="box">
+        <Button
+          className="tool__box"
+          id="basic-button"
+          aria-controls="basic-menu"
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleResetClick}
+        >
+          <ResetIcon className="toolbar__icon" />
+        </Button>
       </div>
       {/* <select
         name="date"
